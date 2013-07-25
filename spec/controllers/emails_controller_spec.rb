@@ -12,7 +12,7 @@ describe EmailsController do
 
 	context "after logged in" do
 		before do
-			session[:user_id] = User.first.to_param
+			session[:user_id] = users(:default)
 		end
 
 		it { should be_success }
