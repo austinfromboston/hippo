@@ -18,6 +18,7 @@ describe EmailsController do
 		it { should be_success }
 
 		describe "POST #create" do
+      render_views
 			it "should exist" do
 				subject
 				expect(response.body).to match /src=/
@@ -26,7 +27,9 @@ describe EmailsController do
 			it "should have an ugly url" do 
 				subject
 				#regex matching /:id
-				expect(response.body).to_not match /(\/\d+)/
+        expect(Email.last.text).to eq("this is email text" )
+				expect(response.body).to_not match /^\/\d{1,3}$/
+        expect(Nokogiri.parse(response.body).css('img').first.attribute('src').value).to match(/assets\/#{Email.last.filename}/)
 			end
 		end
 	end
